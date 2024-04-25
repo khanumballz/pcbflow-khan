@@ -18,10 +18,13 @@ KI_LAYER_DICT = {
     "F.Mask": "GTS",
     "F.Cu": "GTL",
     "F.Fab": "GTD",
+    "F.CrtYd": "GTO",  # Assuming F.CrtYd should map to the same layer as F.SilkS
 }
 
-FP_LIB_PATH = None
+FP_LIB_PATH = '/home/twinlizzie/kicad-footprints-5'
+#FP_LIB_PATH = '/usr/share/kicad/footprints'
 ALL_KICAD_MOD_FILES = None
+#ALL_KICAD_MOD_FILES = ['/home/twinlizzie/Ngnuity-Repos/sylvie-2024/schematics/skidl_code/kicad_mod/PinSocket_1x15_P2.54mm_Vertical.kicad_mod']
 
 
 class KiCadPart(PCBPart):
@@ -103,9 +106,9 @@ class KiCadPart(PCBPart):
             dc.goxy(*pad["xy"])
             dc.board.add_drill(dc.xy, pad["drill"])
             shape = pad["shape"]
-            if shape in ["long", "circle", "octagon", "rect"]:
-                n = {"long": 60, "circle": 60, "octagon": 8, "rect": 4}[shape]
-                if shape == "rect":
+            if shape in ["long", "circle", "octagon", "rect", "oval"]:
+                n = {"long": 60, "circle": 60, "octagon": 8, "rect": 4, "oval": 60}[shape]
+                if shape in ["rect", "oval"]:
                     diameter /= 1.1
                 p = dc.copy()
                 p.n_agon(diameter / 2, n)
